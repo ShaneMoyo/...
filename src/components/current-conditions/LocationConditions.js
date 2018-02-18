@@ -2,34 +2,31 @@ import React, { Component } from 'react';
 import superagent from 'superagent';
 const API_KEY = process.env.REACT_APP_API_KEY || null;
 
-class Weather extends Component {
+class LocationConditions extends Component {
 
-  state = { loading: false }
+  state = { loading: false };
 
   handleSubmit = event => {
     event.preventDefault();
     const { value: zipCode } = event.target.elements.zip;
-    return this.getWeather(zipCode);
-  }
+    return this.getConditions(zipCode);
+  };
 
-  getWeather = zipCode => {
+  getConditions = zipCode => {
     this.setState({ loading: true });
     const url = `http://api.wunderground.com/api/${API_KEY}/conditions/q/${zipCode}.json`;
+    const { id, handleLoadConditions } = this.props;
+
     return superagent.get(url) 
-      .then(response => {
-        console.log('response', response);
-        if(response.body.response.error) {
-          response = { id: this.props.id, error: response.body.response.error.description };
+      .then(({ body }) => {
+        if(body.response.error) {
+          const { description: error } =  body.response.error;
+          body = { id, error };
         } else {
-          const { weather, temp_f: temperature, icon } = response.body.current_observation;
-          response = {
-            id: this.props.id,
-            weather,
-            temperature,
-            icon
-          };
+          const { weather, temp_f: temperature, icon } = body.current_observation;
+          body = { id, weather, temperature, icon };
         }
-        this.props.loadWeather(response);
+        handleLoadConditions(body);
         this.setState({ loading: false });
       });
   }
@@ -54,9 +51,9 @@ class Weather extends Component {
         </form>
         {view}
       </div>
-
     );
+
   }
 }
 
-export default Weather;
+export default LocationConditions;
