@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import PropTypes from 'prop-types';
+
 const API_KEY = process.env.REACT_APP_API_KEY || null;
 
 class LocationConditions extends Component {
@@ -90,5 +92,11 @@ class LocationConditions extends Component {
     );
   }
 }
+
+LocationConditions.PropTypes = {
+  conditions: PropTypes.object,
+  id: PropTypes.string,
+  handleLoadConditions: PropTypes.func
+};
 
 export default LocationConditions;
