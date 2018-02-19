@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component snapshot tests should render CurrentConditions component 1`] = `
+<div
+  class="container is-fluid"
+>
+  <div
+    class="columns is-centered"
+  >
+    <LocationConditions
+      conditions={
+        Object {
+          "error": null,
+          "icon": null,
+          "location": null,
+          "temperature": null,
+          "weather": null,
+        }
+      }
+      handleLoadConditions={[Function]}
+      id="location1"
+    />
+    <LocationConditions
+      conditions={
+        Object {
+          "error": null,
+          "icon": null,
+          "location": null,
+          "temperature": null,
+          "weather": null,
+        }
+      }
+      handleLoadConditions={[Function]}
+      id="location2"
+    />
+  </div>
+</div>
+`;
+
+exports[`component snapshot tests should render LocationConditions component 1`] = `
+<div
+  class="column is-one-third has-text-centered"
+>
+  <div
+    class="box is-offset-2"
+  >
+    <div>
+      <h1
+        class="title is-4 has-text-grey"
+      >
+        test
+      </h1>
+      <h1
+        class="title is-4 has-text-grey"
+      >
+        test
+      </h1>
+      <h1
+        class="subtitle has-text-info"
+      >
+        70
+      </h1>
+      <br />
+    </div>
+    <form
+      onSubmit={[Function]}
+    >
+      <div
+        class="field"
+      >
+        <div
+          class="control"
+        >
+          <input
+            class="input is-small"
+            name="zip"
+            placeholder="enter zip-code"
+            type="text"
+          />
+        </div>
+      </div>
+      <button
+        class="button is-outlined is-small is-info"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+`;

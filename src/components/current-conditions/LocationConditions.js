@@ -93,7 +93,7 @@ class LocationConditions extends Component {
   }
 }
 
-LocationConditions.PropTypes = {
+LocationConditions.propTypes = {
   conditions: PropTypes.object,
   id: PropTypes.string,
   handleLoadConditions: PropTypes.func
