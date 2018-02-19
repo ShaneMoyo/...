@@ -4,12 +4,33 @@ const API_KEY = process.env.REACT_APP_API_KEY || null;
 
 class LocationConditions extends Component {
 
-  state = { loading: false };
+  state = { loading: false, validationFailed: false };
+
+  componentDidMount(){
+    const { id } = this.props;
+    const storedZip = localStorage.getItem(id);
+    if(storedZip) this.getConditions(storedZip);
+  }
+
+  checkZip = zipCode => {
+    const regex = /^\d{5}$/;
+    if(!regex.test(zipCode)){
+      return false;
+    }
+    if(zipCode === ' '){
+      return false;
+    }
+    return true;
+  }
 
   handleSubmit = event => {
     event.preventDefault();
     const { value: zipCode } = event.target.elements.zip;
-    return this.getConditions(zipCode);
+    if(this.checkZip(zipCode)) {
+      this.setState({ validationFailed: false });
+      return this.getConditions(zipCode);
+    }
+    this.setState({ validationFailed: true });
   };
 
   getConditions = zipCode => {
@@ -23,8 +44,9 @@ class LocationConditions extends Component {
           const { description: error } =  body.response.error;
           body = { id, error };
         } else {
-          const { weather, temp_f: temperature, icon } = body.current_observation;
-          body = { id, weather, temperature, icon };
+          const { weather, temp_f: temperature, icon, display_location } = body.current_observation;
+          body = { id, weather, temperature, icon, location: display_location.full };
+          localStorage.setItem(id, zipCode);
         }
         handleLoadConditions(body);
         this.setState({ loading: false });
@@ -32,34 +54,40 @@ class LocationConditions extends Component {
   }
 
   render(){
-    const { weather, temperature, error, icon } = this.props;
-    const { loading } = this.state;
+    const { weather, temperature, error, icon, location } = this.props.conditions;
+    const { loading, validationFailed } = this.state;
+
+    const buttonStyle = loading ? 'button is-loading is-small is-info' : 'button is-outlined is-small is-info';
+    const inputStyle = validationFailed ? 'input is-danger is-small' : 'input is-small';
+
     const view = !error ? 
       <div>
-        <img src={icon}/>
-        <h1>{weather}</h1>
-        <h1>{temperature}</h1>
+        <h1 class="title is-4 has-text-grey">{location}</h1>
+        { icon ? <img src={icon} alt="weather status icon"/> : null}
+        <h1 class="title is-4 has-text-grey">{weather}</h1>
+        <h1 class="subtitle has-text-info">{temperature}</h1>
+        <br/>
       </div> : 
       <div>
-        <h1>{error}</h1>
+        <h1 class="title is-4 has-text-grey">{error}</h1>
       </div>;
 
     return(
-      <div class="tile is-parent is-vertical">
-        <div class="tile is-child notification is-info has-text-white has-text-centered">
+      <div class="column is-one-third has-text-centered">
+        <div class="box is-offset-2">
+          {view}
           <form onSubmit={event => this.handleSubmit(event)}>
-            <div class="field has-text-centered">
-              <div class="control has-text-centered">
-                <input class="input is-medium" type="text" placeholder="enter zip-code" name="zip"/>
+            <div class="field">
+              <div class="control">
+                <input class={inputStyle} type="text" placeholder="enter zip-code" name="zip"/>
+                { validationFailed ? <p class="help is-danger">The lenght of zip code must be five digits</p> : null}
               </div>
             </div>
-            <button class={loading ? 'button is-loading is-medium is-primary' : 'button is-medium is-primary'} type="submit">Submit</button>
+            <button class={buttonStyle} type="submit">Submit</button>
           </form>
-          {view}
         </div>
       </div>
     );
-
   }
 }
 
