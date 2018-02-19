@@ -33,6 +33,7 @@ class LocationConditions extends Component {
 
   render(){
     const { weather, temperature, error, icon } = this.props;
+    const { loading } = this.state;
     const view = !error ? 
       <div>
         <img src={icon}/>
@@ -44,12 +45,18 @@ class LocationConditions extends Component {
       </div>;
 
     return(
-      <div>
-        <form onSubmit={event => this.handleSubmit(event)}>
-          <input type="text" name="zip"/>
-          <button type="submit">Submit</button>
-        </form>
-        {view}
+      <div class="tile is-parent is-vertical">
+        <div class="tile is-child notification is-info has-text-white has-text-centered">
+          <form onSubmit={event => this.handleSubmit(event)}>
+            <div class="field has-text-centered">
+              <div class="control has-text-centered">
+                <input class="input is-medium" type="text" placeholder="enter zip-code" name="zip"/>
+              </div>
+            </div>
+            <button class={loading ? 'button is-loading is-medium is-primary' : 'button is-medium is-primary'} type="submit">Submit</button>
+          </form>
+          {view}
+        </div>
       </div>
     );
 

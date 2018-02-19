@@ -39,25 +39,39 @@ class CurrentConditions extends Component {
     const { location1, location2 } = this.state;
     const temperatureDifference = Object.keys(this.state).length > 1 ? this.temperatureDifference() : 0;
     return (
-      <div>
+      
+      <div class="container">
+        <br/>
+        <div class="tile">
+          
+        </div>
+        <div class="tile is-ancestor">
+          <div class="tile is-vertical is-12">
+            <div class="tile">
 
-        <h1>Temperature Difference</h1>
-        <h2>{temperatureDifference}</h2>
-
-        <LocationConditions id="location1" 
-          error={location1.error}
-          icon={location1.icon} 
-          weather={location1.weather} 
-          temperature={location1.temperature} 
-          handleLoadConditions={response => this.handleLoadConditions(response)}/>
-
-        <LocationConditions id="location2"
-          error={location2.error} 
-          icon={location2.icon} 
-          weather={location2.weather} 
-          temperature={location2.temperature} 
-          handleLoadConditions={response => this.handleLoadConditions(response)}/>
-
+              <article class="tile is-child notification is-info has-text-centered">
+                <h4 class="title is-4 has-text-white">Temperature Difference</h4>
+                <h2>{temperatureDifference}</h2>
+              </article>
+         
+              <LocationConditions id="location1" 
+                error={location1.error}
+                icon={location1.icon} 
+                weather={location1.weather} 
+                temperature={location1.temperature} 
+                handleLoadConditions={response => this.handleLoadConditions(response)}/>
+                
+              <LocationConditions id="location2"
+                error={location2.error} 
+                icon={location2.icon} 
+                weather={location2.weather} 
+                temperature={location2.temperature} 
+                handleLoadConditions={response => this.handleLoadConditions(response)}/>
+               
+            </div>
+          </div> 
+        </div>
+        <br/>
       </div>
     );
   }
