@@ -4,14 +4,14 @@ import LocationConditions from './LocationConditions';
 class CurrentConditions extends Component {
 
   state = {
-    location1: {
+    locationA: {
       location: null,
       weather: null,
       temperature: null,
       icon: null,
       error: null,
     },
-    location2: {
+    locationB: {
       location: null,
       weather: null,
       temperature: null,
@@ -29,37 +29,38 @@ class CurrentConditions extends Component {
   };
 
   calculateTemperatureDifference = () => {
-    const { location1, location2 } = this.state;
-    if(!location1.temperature || !location2.temperature) return;
-    const temperatureDifference = Math.round((location1.temperature - location2.temperature) * 100) / 100;
+    const { locationA, locationB } = this.state;
+    if(!locationA.temperature || !locationB.temperature) return;
+    const temperatureDifference = Math.round((locationA.temperature - locationB.temperature) * 100) / 100;
     this.setState({ temperatureDifference });
   };
 
   render() {
-    const { location1, location2, temperatureDifference } = this.state;
-    const showTemperatureDifference = location1.temperature && location2.temperature;
+    const { locationA, locationB, temperatureDifference } = this.state;
+    const showTemperatureDifference = locationA.temperature && locationB.temperature;
 
     return (
       <div class="container is-fluid" >
-
         <div class="columns is-centered">
 
-          <LocationConditions id="location1" 
-            conditions={location1} 
+          <LocationConditions id="locationA" 
+            conditions={locationA} 
             handleLoadConditions={response => this.handleLoadConditions(response)}/>
                 
-          <LocationConditions id="location2"
-            conditions={location2}
+          <LocationConditions id="locationB"
+            conditions={locationB}
             handleLoadConditions={response => this.handleLoadConditions(response)}/>
 
         </div>
+
         { showTemperatureDifference ? 
           <div class="container has-text-centered">
             <h1 class="title is-4 has-text-grey">
-              {`Temperature difference between ${location1.location} and ${location2.location}: `}
+              {`Temperature difference between ${locationA.location} and ${locationB.location}: `}
             </h1>
             <p class="subtitle has-text-info" >{`${temperatureDifference} degrees`}</p>
           </div> : null }
+          
       </div>
     );
   }
