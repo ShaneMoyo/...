@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "dotenv": "^5.0.0",
     "jest": "^22.3.0",
     "jest-cli": "^22.3.0",
     "prop-types": "^15.6.0",

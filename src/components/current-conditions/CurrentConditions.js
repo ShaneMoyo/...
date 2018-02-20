@@ -40,10 +40,10 @@ class CurrentConditions extends Component {
     const showTemperatureDifference = locationA.temperature && locationB.temperature;
 
     return (
-      <div class="container is-fluid" >
+      <div class="container is-fluid animated fadeIn" >
         <div class="columns is-centered">
 
-          <LocationConditions id="locationA" 
+          <LocationConditions id="locationA"
             conditions={locationA} 
             handleLoadConditions={response => this.handleLoadConditions(response)}/>
                 
