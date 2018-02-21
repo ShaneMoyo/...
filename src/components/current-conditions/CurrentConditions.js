@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import superagent from 'superagent';
 import LocationConditions from './LocationConditions';
+
+const API_KEY = process.env.REACT_APP_API_KEY || null;
 
 class CurrentConditions extends Component {
 
@@ -20,13 +23,35 @@ class CurrentConditions extends Component {
     }
   };
 
-  handleGotConditions = gotConditions => {
-    const { id, weather, temperature, icon, location, error } = gotConditions;
-    const newState = { ...this.state };
-    newState[id] = !error ? { weather, temperature, location, icon: `https://icons.wxug.com/i/c/i/${icon}.gif` } : { error };
-    this.setState(newState);
-    this.calculateTemperatureDifference();
-  };
+  getConditions = (zipCode, id) => {
+    const update = this.state[id];
+    update.loading = true;
+    this.setState({ [id]: update });
+
+    const url = `http://api.wunderground.com/api/${API_KEY}/conditions/q/${zipCode}.json`;
+    return superagent.get(url) 
+      .then(({ body: gotConditions }) => {
+        if(gotConditions.response.error) {
+          const { description: error } =  gotConditions.response.error;
+          gotConditions = { error };
+        } else {
+          const { weather, temp_f: temperature, icon, display_location } = gotConditions.current_observation;
+          gotConditions = { 
+            weather,
+            temperature,
+            icon: `https://icons.wxug.com/i/c/i/${icon}.gif`,
+            location: display_location.full,
+            loading: false 
+          };
+          localStorage.setItem(id, zipCode);
+        }
+        this.setState({ [id]: gotConditions });
+        this.calculateTemperatureDifference();
+      })
+      .catch(() => {
+        this.setState({ [id]: { error: 'Something went wrong. Database not responding', loading: false } });
+      });
+  }
 
   calculateTemperatureDifference = () => {
     const { locationA, locationB } = this.state;
@@ -43,13 +68,13 @@ class CurrentConditions extends Component {
       <div className="container is-fluid" >
         <div className="columns is-centered">
 
-          <LocationConditions id="locationA"
+          <LocationConditions
             conditions={locationA} 
-            handleGotConditions={response => this.handleGotConditions(response)}/>
+            handleGetConditions={zipCode => this.getConditions(zipCode, 'locationA')}/>
                 
-          <LocationConditions id="locationB"
+          <LocationConditions 
             conditions={locationB}
-            handleGotConditions={response => this.handleGotConditions(response)}/>
+            handleGetConditions={zipCode => this.getConditions(zipCode, 'locationB')}/>
 
         </div>
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import superagent from 'superagent';
 import PropTypes from 'prop-types';
 
-const API_KEY = process.env.REACT_APP_API_KEY || null;
+
 
 class LocationConditions extends Component {
 
@@ -30,38 +29,15 @@ class LocationConditions extends Component {
     const { value: zipCode } = event.target.elements.zip;
     if(this.checkZip(zipCode)) {
       this.setState({ validationFailed: false });
-      return this.getConditions(zipCode);
+      return this.props.handleGetConditions(zipCode);
     }
     this.setState({ validationFailed: true });
   };
 
-  getConditions = zipCode => {
-    this.setState({ loading: true });
-    const url = `http://api.wunderground.com/api/${API_KEY}/conditions/q/${zipCode}.json`;
-    const { id, handleGotConditions } = this.props;
-
-    return superagent.get(url) 
-      .then(({ body: gotConditions }) => {
-        if(gotConditions.response.error) {
-          const { description: error } =  gotConditions.response.error;
-          gotConditions = { id, error };
-        } else {
-          const { weather, temp_f: temperature, icon, display_location } = gotConditions.current_observation;
-          gotConditions = { id, weather, temperature, icon, location: display_location.full };
-          localStorage.setItem(id, zipCode);
-        }
-        handleGotConditions(gotConditions);
-        this.setState({ loading: false });
-      })
-      .catch(() => {
-        handleGotConditions({ id, error: 'Something went wrong. Database not responding' });
-        this.setState({ loading: false });
-      });
-  }
 
   render(){
-    const { weather, temperature, error, icon, location } = this.props.conditions;
-    const { loading, validationFailed } = this.state;
+    const { weather, temperature, error, icon, location, loading } = this.props.conditions;
+    const { validationFailed } = this.state;
 
     const buttonStyle = loading ? 'button is-loading is-small is-info' : 'button is-outlined is-small is-info';
     const inputStyle = validationFailed ? 'input is-danger is-small' : 'input is-small';
