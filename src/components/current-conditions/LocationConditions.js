@@ -52,6 +52,10 @@ class LocationConditions extends Component {
         }
         handleGotConditions(gotConditions);
         this.setState({ loading: false });
+      })
+      .catch(() => {
+        handleGotConditions({ id, error: 'Something went wrong. Database not responding' });
+        this.setState({ loading: false });
       });
   }
 
@@ -71,7 +75,8 @@ class LocationConditions extends Component {
         <br/>
       </div> : 
       <div>
-        <h1 className="title is-4 has-text-grey">{error}</h1>
+        <h1 className="title is-6 has-text-danger">{error}</h1>
+        <br/>
       </div>;
 
     return(
