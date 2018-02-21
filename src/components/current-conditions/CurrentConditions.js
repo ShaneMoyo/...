@@ -40,8 +40,8 @@ class CurrentConditions extends Component {
     const showTemperatureDifference = locationA.temperature && locationB.temperature;
 
     return (
-      <div class="container is-fluid animated fadeIn" >
-        <div class="columns is-centered">
+      <div className="container is-fluid animated fadeIn" >
+        <div className="columns is-centered">
 
           <LocationConditions id="locationA"
             conditions={locationA} 
@@ -54,11 +54,11 @@ class CurrentConditions extends Component {
         </div>
 
         { showTemperatureDifference ? 
-          <div class="container has-text-centered">
-            <h1 class="title is-4 has-text-grey">
+          <div className="container has-text-centered">
+            <h1 className="title is-4 has-text-grey">
               {`Temperature difference between ${locationA.location} and ${locationB.location}: `}
             </h1>
-            <p class="subtitle has-text-info" >{`${temperatureDifference} degrees`}</p>
+            <p className="subtitle has-text-info" >{`${temperatureDifference} degrees`}</p>
           </div> : null }
           
       </div>

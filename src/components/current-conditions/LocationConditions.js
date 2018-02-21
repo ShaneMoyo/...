@@ -61,33 +61,33 @@ class LocationConditions extends Component {
 
     const buttonStyle = loading ? 'button is-loading is-small is-info' : 'button is-outlined is-small is-info';
     const inputStyle = validationFailed ? 'input is-danger is-small' : 'input is-small';
-    
+
     const view = !error ? 
       <div>
-        <h1 class="title is-4 has-text-grey">{location}</h1>
+        <h1 className="title is-4 has-text-grey">{location}</h1>
         { icon ? <img src={icon}  alt="weather status icon"/> : null}
-        <h1 class="title is-4 has-text-grey">{weather}</h1>
-        <h1 class="subtitle has-text-info">{temperature}</h1>
+        <h1 className="title is-4 has-text-grey">{weather}</h1>
+        <h1 className="subtitle has-text-info">{temperature}</h1>
         <br/>
       </div> : 
       <div>
-        <h1 class="title is-4 has-text-grey">{error}</h1>
+        <h1 className="title is-4 has-text-grey">{error}</h1>
       </div>;
 
     return(
-      <div class="column is-one-third has-text-centered">
-        <div class="box is-offset-2">
+      <div className="column is-one-third has-text-centered">
+        <div className="box is-offset-2">
           <div>
             {view}
           </div>
           <form onSubmit={event => this.handleSubmit(event)}>
-            <div class="field">
-              <div class="control">
-                <input class={inputStyle} type="text" placeholder="enter zip-code" name="zip"/>
+            <div className="field">
+              <div className="control">
+                <input className={inputStyle} type="text" placeholder="enter zip-code" name="zip"/>
                 { validationFailed ? <p class="help is-danger">The lenght of zip code must be five digits</p> : null}
               </div>
             </div>
-            <button class={buttonStyle} type="submit">Submit</button>
+            <button className={buttonStyle} type="submit">Submit</button>
           </form>
         </div>
       </div>
