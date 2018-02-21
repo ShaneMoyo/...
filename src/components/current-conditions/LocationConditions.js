@@ -71,7 +71,7 @@ class LocationConditions extends Component {
         <h1 className="title is-4 has-text-grey">{location}</h1>
         { icon ? <img src={icon}  alt="weather status icon"/> : null}
         <h1 className="title is-4 has-text-grey">{weather}</h1>
-        <h1 className="subtitle has-text-info">{`${temperature} ℉`}</h1>
+        <h1 className="subtitle has-text-info">{temperature && `${temperature} ℉`}</h1>
         <br/>
       </div> : 
       <div>
