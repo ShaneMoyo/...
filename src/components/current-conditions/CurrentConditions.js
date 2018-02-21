@@ -20,7 +20,7 @@ class CurrentConditions extends Component {
     }
   };
 
-  handleLoadConditions = gotConditions => {
+  handleGotConditions = gotConditions => {
     const { id, weather, temperature, icon, location, error } = gotConditions;
     const newState = { ...this.state };
     newState[id] = !error ? { weather, temperature, location, icon: `https://icons.wxug.com/i/c/i/${icon}.gif` } : { error };
@@ -40,16 +40,16 @@ class CurrentConditions extends Component {
     const showTemperatureDifference = locationA.temperature && locationB.temperature;
 
     return (
-      <div className="container is-fluid animated fadeIn" >
+      <div className="container is-fluid" >
         <div className="columns is-centered">
 
           <LocationConditions id="locationA"
             conditions={locationA} 
-            handleLoadConditions={response => this.handleLoadConditions(response)}/>
+            handleGotConditions={response => this.handleGotConditions(response)}/>
                 
           <LocationConditions id="locationB"
             conditions={locationB}
-            handleLoadConditions={response => this.handleLoadConditions(response)}/>
+            handleGotConditions={response => this.handleGotConditions(response)}/>
 
         </div>
 

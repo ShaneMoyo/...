@@ -38,19 +38,19 @@ class LocationConditions extends Component {
   getConditions = zipCode => {
     this.setState({ loading: true });
     const url = `http://api.wunderground.com/api/${API_KEY}/conditions/q/${zipCode}.json`;
-    const { id, handleLoadConditions } = this.props;
+    const { id, handleGotConditions } = this.props;
 
     return superagent.get(url) 
-      .then(({ body }) => {
-        if(body.response.error) {
-          const { description: error } =  body.response.error;
-          body = { id, error };
+      .then(({ body: gotConditions }) => {
+        if(gotConditions.response.error) {
+          const { description: error } =  gotConditions.response.error;
+          gotConditions = { id, error };
         } else {
-          const { weather, temp_f: temperature, icon, display_location } = body.current_observation;
-          body = { id, weather, temperature, icon, location: display_location.full };
+          const { weather, temp_f: temperature, icon, display_location } = gotConditions.current_observation;
+          gotConditions = { id, weather, temperature, icon, location: display_location.full };
           localStorage.setItem(id, zipCode);
         }
-        handleLoadConditions(body);
+        handleGotConditions(gotConditions);
         this.setState({ loading: false });
       });
   }
@@ -76,10 +76,8 @@ class LocationConditions extends Component {
 
     return(
       <div className="column is-one-third has-text-centered">
-        <div className="box is-offset-2">
-          <div>
-            {view}
-          </div>
+        <div className="box is-offset-2"> 
+          {view}
           <form onSubmit={event => this.handleSubmit(event)}>
             <div className="field">
               <div className="control">
@@ -98,7 +96,7 @@ class LocationConditions extends Component {
 LocationConditions.propTypes = {
   conditions: PropTypes.object,
   id: PropTypes.string,
-  handleLoadConditions: PropTypes.func
+  handleGotConditions: PropTypes.func
 };
 
 export default LocationConditions;
