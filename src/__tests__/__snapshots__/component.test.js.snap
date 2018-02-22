@@ -2,90 +2,126 @@
 
 exports[`component snapshot tests should render CurrentConditions component 1`] = `
 <div
-  class="container is-fluid"
+  className="container is-fluid"
 >
   <div
-    class="columns is-centered"
+    className="columns is-multiline is-centered"
   >
-    <LocationConditions
-      conditions={
-        Object {
-          "error": null,
-          "icon": null,
-          "location": null,
-          "temperature": null,
-          "weather": null,
+    <div
+      className="column is-one-third has-text-centered"
+    >
+      <LocationView
+        conditions={
+          Object {
+            "error": null,
+            "icon": null,
+            "location": null,
+            "temperature": null,
+            "weather": null,
+          }
         }
-      }
-      handleLoadConditions={[Function]}
-      id="location1"
-    />
-    <LocationConditions
-      conditions={
-        Object {
-          "error": null,
-          "icon": null,
-          "location": null,
-          "temperature": null,
-          "weather": null,
+      />
+      <SelectLocation
+        handleGetConditions={[Function]}
+      />
+    </div>
+    <div
+      className="column is-one-third has-text-centered"
+    >
+      <LocationView
+        conditions={
+          Object {
+            "error": null,
+            "icon": null,
+            "location": null,
+            "temperature": null,
+            "weather": null,
+          }
         }
-      }
-      handleLoadConditions={[Function]}
-      id="location2"
-    />
+      />
+      <SelectLocation
+        handleGetConditions={[Function]}
+      />
+    </div>
+    <div
+      className="column is-12 has-text-centered"
+    >
+      <TemperatureDifference
+        locationA={null}
+        locationB={null}
+        temperatureA={null}
+        temperatureB={null}
+      />
+    </div>
   </div>
 </div>
 `;
 
-exports[`component snapshot tests should render LocationConditions component 1`] = `
+exports[`component snapshot tests should render LocationView component 1`] = `
 <div
-  class="column is-one-third has-text-centered"
+  className="box is-offset-2"
+>
+  <div>
+    <h1
+      className="title is-4 has-text-grey"
+    >
+      test
+    </h1>
+    <h1
+      className="title is-4 has-text-grey"
+    >
+      test
+    </h1>
+    <h1
+      className="subtitle has-text-info"
+    >
+      70 ℉
+    </h1>
+    <br />
+  </div>
+</div>
+`;
+
+exports[`component snapshot tests should render SelectLocation component 1`] = `
+<form
+  onSubmit={[Function]}
 >
   <div
-    class="box is-offset-2"
+    className="field"
   >
-    <div>
-      <h1
-        class="title is-4 has-text-grey"
-      >
-        test
-      </h1>
-      <h1
-        class="title is-4 has-text-grey"
-      >
-        test
-      </h1>
-      <h1
-        class="subtitle has-text-info"
-      >
-        70
-      </h1>
-      <br />
-    </div>
-    <form
-      onSubmit={[Function]}
+    <div
+      className="control"
     >
-      <div
-        class="field"
-      >
-        <div
-          class="control"
-        >
-          <input
-            class="input is-small"
-            name="zip"
-            placeholder="enter zip-code"
-            type="text"
-          />
-        </div>
-      </div>
-      <button
-        class="button is-outlined is-small is-info"
-        type="submit"
-      >
-        Submit
-      </button>
-    </form>
+      <input
+        className="input is-small"
+        name="zip"
+        placeholder="enter zip-code"
+        type="text"
+      />
+    </div>
   </div>
+  <button
+    className="button is-small is-info"
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
+`;
+
+exports[`component snapshot tests should render TemperatureDifference component 1`] = `
+<div
+  className="container has-text-centered"
+>
+  <h1
+    className="title is-4 has-text-grey"
+  >
+    Temperature difference between test and test: 
+  </h1>
+  <p
+    className="subtitle has-text-info"
+  >
+    null degrees
+  </p>
 </div>
 `;
