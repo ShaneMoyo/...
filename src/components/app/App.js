@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="container app has-text-centered">
-        <h1 className="title has-text-white">Weather Application</h1>
+        <header className="title has-text-white">Weather Application</header>
         <hr/>
         <CurrentConditions/>
       </div>

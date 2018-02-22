@@ -63,7 +63,6 @@ class CurrentConditions extends Component {
       });
   }
 
-
   render() {
     const { locationA, locationB } = this.state;
     return (
