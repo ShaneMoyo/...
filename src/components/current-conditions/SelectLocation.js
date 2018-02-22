@@ -40,8 +40,8 @@ class SelectLocation extends Component {
       <form onSubmit={event => this.handleSubmit(event)}>
         <div className="field">
           <div className="control">
-            <input className={inputStyle} type="text" placeholder="enter zip-code" name="zip"/>
-            { validationFailed ? <p className="help is-danger">The lenght of zip code must be five digits</p> : null}
+            <input className={inputStyle} type="text" placeholder="Enter ZIP code" name="zip"/>
+            { validationFailed ? <p className="help is-danger">The length of ZIP code must be five digits</p> : null}
           </div>
         </div>
         <button className={buttonStyle} type="submit">Submit</button>
